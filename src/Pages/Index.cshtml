@@ -1,0 +1,68 @@
+﻿@page
+@model IndexModel
+@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+@{
+	ViewData["Title"] = "Home page";
+}
+
+<div class="relative bg-cover bg-center bg-no-repeat h-full home-overlay">
+	<header class="flex space-x-2 text-white">
+		<nav class="container mx-auto my-10 text-2xl w-full items-center flex flex-nowrap font-thin">
+			<a class="" asp-area="" asp-page="/Index">
+				<img src="~/img/default-monochrome-white.svg" class="w-56 h-auto" />
+			</a>
+
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="ltr:ml-auto rtl:mr-auto flex w-fit space-x-10">
+				<ul class="flex space-x-10 rtl:space-x-reverse flex-grow-1 uppercase">
+					<li class="w-7 h-7 flex justify-center cursor-pointer" onclick="toggleLanguage()">
+						<i class="la la-language text-3xl leading-7"> </i>
+					</li>
+
+					<li
+						class="duration-150 transition-all border-b-2 border-transparent hover:border-gray-700 dark:hover:border-white">
+						<a class="" asp-area="Admin" asp-page="/Index">
+							@Localizer["Admin"]
+						</a>
+					</li>
+
+					<li class="duration-150 transition-all border-b-2 border-transparent hover:border-white">
+						<a class="" asp-area="Tours" asp-page="/Index">
+							@Localizer["Tours"]
+						</a>
+					</li>
+
+					<li class="duration-150 transition-all border-b-2 border-transparent hover:border-white">
+						<a class="" asp-area="Locations" asp-page="/Index">
+							@Localizer["Locations"]
+						</a>
+					</li>
+
+					<li class="duration-150 transition-all border-b-2 border-transparent hover:border-white">
+						<a class="" asp-area="Experiences" asp-page="/Index">
+							@Localizer["Experiences"]
+						</a>
+					</li>
+
+					<partial name="_LoginPartial" />
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+	<main class="container mx-auto text-white md:mt-40">
+		<h1 class="text-8xl md:mb-10">
+			Welcome
+		</h1>
+
+		<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+	</main>
+</div>
+
+

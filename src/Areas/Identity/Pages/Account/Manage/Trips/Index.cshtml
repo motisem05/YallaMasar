@@ -1,0 +1,15 @@
+@page
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using YallaMasar;
+
+@model YallaMasar.Areas.Identity.Pages.Account.Manage.Trips.IndexModel
+
+@{
+	ViewData["Title"] = "Trips";
+}
+
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+<a  class='btn-primary @ManageNavPages.PageNavClass(ViewContext, "Trips")' id="personal-data" asp-page="/Account/Manage/Trips/Add">
+	@Localizer["Add"]
+</a>

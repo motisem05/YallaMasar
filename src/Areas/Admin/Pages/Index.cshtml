@@ -1,0 +1,10 @@
+﻿@page
+@model YallaMasar.Areas.Admin.Pages.IndexModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using YallaMasar;
+@inject IHtmlLocalizer<SharedResource> _sharedLocalizer
+
+<h1>
+	@_sharedLocalizer["Hello"]
+</h1>

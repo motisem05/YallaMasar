@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@using YallaMasar;
+@using YallaMasar.Areas.Admin.Pages;
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+@{
+	var lang = System.Threading.Thread.CurrentThread.CurrentUICulture.Name ?? "ar";
+	var dir = lang == "ar" ? "rtl" : "ltr";
+	string title = ViewData["Title"]?.ToString() ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="@lang" dir="@dir">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>
+		@Localizer[title] - @Localizer["Yalla Masar"]
+	</title>
+
+	<link rel="stylesheet" href="~/lib/lineawesome/css/line-awesome.min.css" />
+	<link rel="stylesheet" href="~/css/tailwind.min.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body>
+	@RenderBody()
+
+	<script defer src="~/js/alpine.min.js" asp-append-version="true"></script>
+	<script defer src="~/js/site.js" asp-append-version="true"></script>
+
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

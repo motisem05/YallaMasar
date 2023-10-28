@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@using YallaMasar;
+
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+@{
+	if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+	{
+		Layout = (string)parentLayout;
+	}
+	else
+	{
+		Layout = "/Pages/Shared/_SubLayout.cshtml";
+	}
+
+	ViewData["ShouldFlipBackground"] = true;
+	ViewData["Image"] = $"/img/jerusalem-{Thread.CurrentThread.CurrentUICulture.Name}.jpg";
+}
+
+@section MenuItems{
+	<partial name="_ManageNav" />
+}
+
+@section PhoneMenuItems{
+	<partial name="_ManageNav" />
+}
+
+<h3 class="mb-2 text-2xl">
+	@Localizer["Manage your account"]
+</h3>
+
+<hr
+	class="md:w-1/2 mb-8 h-px mt-0 rtl:bg-gradient-to-l ltr:bg-gradient-to-r border-0 from-black dark:from-white via-transparent dark:via-transparent" />
+
+<div>
+	@RenderBody()
+</div>
+
+@section Scripts {
+	@RenderSection("Scripts", required: false)
+}

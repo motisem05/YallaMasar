@@ -1,0 +1,14 @@
+
+Hope you enjoy your new logo, here are the people that
+made your beautiful logo happen :)
+font name: Quicksand-Light
+font link: https://www.fontsquirrel.com/fonts/quicksand
+font author: Andrew Paglinawan
+font author site: http://andrewpaglinawan.com/
+
+
+icon designer: Anthony Ledoux
+icon designer link: /Vntole
+        
+{"bg":"#01252C","icon":"#88DF95","font":"#FFFFFF","slogan":"#ffffff"}
+      

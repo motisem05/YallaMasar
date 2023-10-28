@@ -1,0 +1,93 @@
+@page "{id:Guid}"
+@model YallaMasar.Areas.Admin.Pages.Providers.ReviewModel
+
+@{
+	ViewData["Title"] = ManageAdminNavPages.Providers;
+	ViewData["ActivePage"] = ManageAdminNavPages.Providers;
+}
+
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+<div class="flex flex-col space-y-4">
+	<h3 class="text-3xl">
+		@Localizer["Review"]
+	</h3>
+
+	<hr class="h-px mb-10 rtl:bg-gradient-to-l ltr:bg-gradient-to-r border-0 from-black via-transparent" />
+
+	<div class="flex space-x-4 rtl:space-x-reverse flex-nowrap">
+		<span class="w-1/3">
+			@Localizer["Name"] :
+		</span>
+
+		<span class="w-2/3">
+			@Model.Provider.Name
+		</span>
+	</div>
+
+	<div class="flex space-x-4 rtl:space-x-reverse flex-nowrap">
+		<span class="w-1/3">
+			@Localizer["Email"] :
+		</span>
+
+		<span class="w-2/3">
+			@Model.Provider.Email
+		</span>
+	</div>
+
+	<div class="flex space-x-4 rtl:space-x-reverse flex-nowrap">
+		<span class="w-1/3">
+			@Localizer["Phone Number"] :
+		</span>
+
+		<span class="w-2/3">
+			@Model.Provider.PhoneNumber
+		</span>
+	</div>
+
+	<div class="flex space-x-4 rtl:space-x-reverse flex-nowrap">
+		<span class="w-1/3">
+			@Localizer["Description"] :
+		</span>
+
+		<span class="w-2/3">
+			@Model.Provider.Description
+		</span>
+	</div>
+
+	<div class="flex space-x-4 rtl:space-x-reverse flex-nowrap">
+		<span class="w-1/3">
+			@Localizer["Status"] :
+		</span>
+
+		<span class="w-2/3">
+			@Localizer[@Model.Provider.Status.ToString()]
+		</span>
+	</div>
+
+	<div class="text-red-500">
+		<div asp-validation-summary="ModelOnly" class="text-danger mb-6"></div>
+	</div>
+
+	<div class="flex space-x-4 rtl:space-x-reverse flex-nowrap">
+		<form method="post">
+			<input type="hidden" name="Status" value="@YallaMasar.Enums.Status.Approved" />
+
+			<button class="btn-primary">
+				@Localizer["Accept"]
+			</button>
+		</form>
+
+		<form method="post">
+			<input type="hidden" name="Status" value="@YallaMasar.Enums.Status.Rejected" />
+
+			<button class="btn-danger">
+				@Localizer["Reject"]
+			</button>
+		</form>
+
+		<a class="btn-text" asp-area="Admin" asp-page="/Providers/Index">
+			@Localizer["Go back"]
+		</a>
+	</div>
+</div>

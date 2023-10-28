@@ -1,0 +1,74 @@
+﻿@using YallaMasar.Data.Models.Users;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using YallaMasar;
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IHtmlLocalizer<SharedResource> Localizer
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+	var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+	var isProvider = User.IsInRole("Provider");
+}
+
+<li class="">
+	<a class=" @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">
+		@Localizer["Profile"]
+	</a>
+</li>
+
+<li class="">
+	<a class=" @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="/Account/Manage/Email">
+		@Localizer["Email"]
+	</a>
+</li>
+
+<li class="">
+	<a class=" @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password"
+		asp-page="/Account/Manage/ChangePassword">
+		@Localizer["Password"]
+	</a>
+</li>
+
+<li class="">
+	<a class='@ManageNavPages.PageNavClass(ViewContext, "Provider")' id="provider"
+		asp-page="/Account/Manage/Provider/Index">
+		@Localizer["Provider"]
+	</a>
+</li>
+
+
+@if (isProvider)
+{
+	<li class="">
+		<a class='@ManageNavPages.PageNavClass(ViewContext, "Trips")' id="Trips"
+			asp-page="/Account/Manage/Trips/Index">
+			@Localizer["Trips"]
+		</a>
+	</li>
+}
+
+
+@if (hasExternalLogins)
+{
+	<li id="external-logins" class="">
+		<a id="external-login" class=" @ManageNavPages.ExternalLoginsNavClass(ViewContext)"
+			asp-page="/Account/Manage/ExternalLogins">
+			@Localizer["External logins"]
+		</a>
+	</li>
+}
+
+<li class="">
+	<a class=" @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor"
+		asp-page="/Account/Manage/TwoFactorAuthentication">
+		@Localizer["Two-factor authentication"]
+	</a>
+</li>
+
+<li class="">
+	<a class=" @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data"
+		asp-page="/Account/Manage/PersonalData">
+		@Localizer["Personal data"]
+	</a>
+</li>

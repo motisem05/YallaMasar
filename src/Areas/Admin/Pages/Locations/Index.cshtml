@@ -1,0 +1,106 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using YallaMasar;
+@model YallaMasar.Areas.Admin.Pages.Locations.IndexModel
+
+@{
+	ViewData["Title"] = ManageAdminNavPages.Locations;
+	ViewData["ActivePage"] = ManageAdminNavPages.Locations;
+}
+
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+<div>
+	<h2 class="font-bold leading-tight uppercase dark:text-white opacity-60 mb-4 flex justify-between items-end">
+		<span>
+			@Localizer[ViewData["Title"].ToString()]
+		</span>
+
+		<a asp-area="Admin" asp-page="/Locations/Form" asp-page-handler="add"
+   class="bg-primary-500 px-6 py-2 text-center text-white cursor-pointer hover:bg-primary-700 active:bg-primary-800 transition-colors duration-300">
+			@Localizer["Add"]
+		</a>
+	</h2>
+
+	<hr class="mb-4 h-px mt-0 rtl:bg-gradient-to-l ltr:bg-gradient-to-r border-0 from-black via-transparent" />
+
+	<div class="flex space-x-4 space-y-4 rtl:space-x-reverse">
+		@foreach (var location in Model.Locations)
+		{
+			<div class="first:rtl:mr-4 first:mt-4 first:ltr:ml-4 relative shadow-md group w-64 h-96 bg-cover bg-center bg-no-repeat hover:scale-105 transition-all duration-300 rounded-md"
+				style="background-image: url('/api/Locations/Covers/@location.Id');">
+
+				<div class="absolute rtl:bg-gradient-to-tl ltr:bg-gradient-to-tr from-black/80 via-transparent 
+				inset-0 h-full w-full text-white flex items-end pb-4 rtl:pr-4 ltr:pl-4
+				">
+					<h2 class="text-3xl">
+						@location.Name
+					</h2>
+				</div>
+
+				<div class="absolute flex flex-col px-3 py-1 top-2 ltr:right-2 rtl:left-2">
+					<div class="flex justify-center">
+						<div x-data="{
+							open: false,
+							toggle() {
+								if (this.open) {
+									return this.close()
+								}
+
+								this.$refs.button.focus()
+
+								this.open = true
+							},
+							close(focusAfter) {
+								if (! this.open) return
+
+								this.open = false
+
+								focusAfter && focusAfter.focus()
+							}
+						}" x-on:keydown.escape.prevent.stop="close($refs.button)"
+							x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+							x-id="['dropdown-button']" class="relative">
+							<button x-ref="button" x-on:click="toggle()" :aria-expanded="open"
+								:aria-controls="$id('dropdown-button')" type="button" class="flex items-center shadow">
+								<i class="la la-chevron-down"></i>
+							</button>
+
+							<div x-ref="panel" x-show="open" x-transition.origin.top.left
+								x-on:click.outside="close($refs.button)" :id="$id('dropdown-button')" style="display: none;"
+								class="absolute rtl:left-0 ltr:right-0 mt-2 w-40 bg-white shadow-md">
+								<a asp-area="Admin" asp-page="/Locations/Details" asp-route-id="@location.Id" class="flex items-center gap-2 w-full px-4 py-2.5
+								 hover:bg-gray-100 disabled:text-gray-500">
+									<i class="la la-info"></i>
+
+									<span class="text-base">
+										@Localizer["Details"]
+									</span>
+								</a>
+
+								<a asp-area="Admin" asp-page="/Locations/Form" asp-route-id="@location.Id"
+								asp-page-handler="edit" class="flex items-center gap-2 w-full px-4 py-2.5
+								 hover:bg-gray-100 disabled:text-gray-500">
+									<i class="la la-edit"></i>
+
+									<span class="text-base">
+										@Localizer["Edit"]
+									</span>
+								</a>
+
+								<a href="#"
+									class="flex items-center gap-2 text-red-600 w-full px-4 py-2.5 hover:bg-gray-100 disabled:text-gray-500">
+									<i class="la la-trash"></i>
+
+									<span class="text-base">
+										@Localizer["Delete"]
+									</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>

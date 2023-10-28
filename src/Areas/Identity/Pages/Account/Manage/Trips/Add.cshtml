@@ -1,0 +1,126 @@
+@page
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using YallaMasar;
+
+@model YallaMasar.Areas.Identity.Pages.Account.Manage.Trips.AddModel
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+@{
+	ViewData["Title"] = "Trips";
+	ViewData["Image"] = "/img/register.svg";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div class="flex flex-col md:flex-row md:space-x-10 rtl:space-x-reverse space-y-4 md:space-y-0 flex-nowrap">
+	<div class="w-full md:w-1/2">
+		<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="flex flex-col space-y-4">
+			<h2>
+				Create a new account.
+			</h2>
+
+			<div asp-validation-summary="ModelOnly" class="text-red-500 text-sm"></div>
+
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+				<h3 class="md:col-span-2 text-2xl">
+					@Localizer["Trip Information"]
+				</h3>
+
+				<hr
+					class="md:col-span-2 mb-4 h-px mt-0 rtl:bg-gradient-to-l ltr:bg-gradient-to-r border-0 from-black via-transparent" />
+
+				<div class="relative md:col-span-2">
+					<input asp-for="Input.Name" class="input peer" placeholder=" " autocomplete="Name"
+						aria-required="true" />
+					<label asp-for="Input.Name" class="input-label"></label>
+					<span asp-validation-for="Input.Name" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<input asp-for="Input.Capacity" class="input peer" placeholder=" " autocomplete="Capacity"
+						aria-required="true" />
+					<label asp-for="Input.Capacity" class="input-label"></label>
+					<span asp-validation-for="Input.Capacity" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<input asp-for="Input.Date" class="input peer" placeholder=" " autocomplete="Date"
+						aria-required="true" />
+					<label asp-for="Input.Date" class="input-label"></label>
+					<span asp-validation-for="Input.Date" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<input asp-for="Input.LastRegistrationDate" class="input peer" placeholder=" "
+						autocomplete="LastRegistrationDate" aria-required="true" />
+					<label asp-for="Input.LastRegistrationDate" class="input-label"></label>
+					<span asp-validation-for="Input.LastRegistrationDate" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<input asp-for="Input.LastWithdrawDate" class="input peer" placeholder=" "
+						autocomplete="LastWithdrawDate" aria-required="true" />
+					<label asp-for="Input.LastWithdrawDate" class="input-label"></label>
+					<span asp-validation-for="Input.LastWithdrawDate" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<input asp-for="Input.Price" class="input peer" placeholder=" " autocomplete="Price"
+						aria-required="true" />
+					<label asp-for="Input.Price" class="input-label"></label>
+					<span asp-validation-for="Input.Price" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<input asp-for="Input.SalePrice" class="input peer" placeholder=" " autocomplete="SalePrice"
+						aria-required="true" />
+					<label asp-for="Input.SalePrice" class="input-label"></label>
+					<span asp-validation-for="Input.SalePrice" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative md:col-span-2">
+					<textarea asp-for="Input.Description" class="input peer" placeholder=" " autocomplete="username"
+						aria-required="true">
+					</textarea>
+					<label asp-for="Input.Description" class="input-label"></label>
+					<span asp-validation-for="Input.Description" class="text-red-500 text-sm"></span>
+				</div>
+
+				<h3 class="md:col-span-2 text-2xl mt-4">
+					@Localizer["Contact Information"]
+				</h3>
+
+				<hr
+					class="md:col-span-2 mb-4 h-px mt-0 rtl:bg-gradient-to-l ltr:bg-gradient-to-r border-0 from-black via-transparent" />
+
+				<div class="relative">
+					<input asp-for="Input.ContactEmail" class="input peer" placeholder=" " autocomplete="username"
+						aria-required="true" />
+					<label asp-for="Input.ContactEmail" class="input-label"></label>
+					<span asp-validation-for="Input.ContactEmail" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<input asp-for="Input.ContactPhoneNumber" class="input peer" placeholder=" "
+						autocomplete="PhoneNumber" aria-required="true" />
+					<label asp-for="Input.ContactPhoneNumber" class="input-label"></label>
+					<span asp-validation-for="Input.ContactPhoneNumber" class="text-red-500 text-sm"></span>
+				</div>
+			</div>
+
+			<div class="flex flex-row space-x-2 rtl:space-x-reverse">
+				<a asp-area="Identity" asp-page="/Account/Manage/Trips/Index" class="btn-text">
+					@Localizer["Go back"]
+				</a>
+
+				<button id="registerSubmit" type="submit" class="btn-primary">
+					@Localizer["Continue"]
+				</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

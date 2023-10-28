@@ -1,0 +1,241 @@
+﻿@page "/Admin/Locations/{handler}/{id?}"
+@model YallaMasar.Areas.Admin.Pages.Locations.FormModel
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using YallaMasar;
+@{
+	ViewData["Title"] = ManageAdminNavPages.Locations;
+	ViewData["ActivePage"] = ManageAdminNavPages.Locations;
+}
+
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+<div class="container mx-auto">
+	<div class="">
+		<form id="account" enctype="multipart/form-data" method="post"
+   x-data="{ language: '@Thread.CurrentThread.CurrentUICulture.Name', arError: false, enError: false }">
+			@Html.AntiForgeryToken()
+
+			<div class="mb-10">
+				<div onclick="document.getElementById('Input_Cover').click()"
+					class="overflow-hidden relative mx-auto h-48 w-48 bg-gray-300 bg-opacity-70 cursor-pointer">
+
+					@if (!string.IsNullOrEmpty(Model.CoverPath))
+					{
+						<img class="h-full w-full z-10 absolute top-0 left-0 right-0 bottom-0" id="Input_CoverPreview"
+							alt="Cover" src="/api/Locations/Covers/@Model.Id" />
+					}
+					else
+					{
+						<span
+							class="text-center h-full w-full text-2xl text-gray-600 absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center ">
+							Cover
+						</span>
+						<img class="h-full w-full hidden z-10 absolute top-0 left-0 right-0 bottom-0"
+							id="Input_CoverPreview" alt="Cover" />
+					}
+
+				</div>
+
+				<input asp-for="Input.Cover" class="hidden" />
+				<span asp-validation-for="Input.Cover" class="text-danger"></span>
+			</div>
+
+			<div asp-validation-summary="ModelOnly" class="text-danger mb-6"></div>
+
+			<div
+				class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700 mb-4">
+				<ul class="flex flex-wrap -mb-px">
+					<li class="mr-2 rtl:order-first">
+						<button type="button" x-on:click="language = 'ar'" :class="{
+								'border-primary-400 text-primary-600 ' : language === 'ar',
+								'border-transparent hover:text-gray-500 hover:border-gray-300 dark:hover:text-gray-300': language !== 'ar' && !arError,
+								'border-red-600 text-red-500': arError
+							}" class=" inline-block p-4 border-b-2">
+							@Localizer["Arabic"]
+						</button>
+					</li>
+
+					<li class="mr-2 ltr:order-first ">
+						<button type="button" x-on:click="language = 'en'" :class="{
+								'border-primary-400 text-primary-600 ' : language === 'en', 
+								'border-transparent hover:text-gray-500 hover:border-gray-300 dark:hover:text-gray-300': language !== 'en' && !enError,
+								'border-red-600 text-red-500': enError
+							}" class="inline-block p-4 border-b-2 " aria-current="page">
+							@Localizer["English"]
+						</button>
+					</li>
+				</ul>
+			</div>
+
+			<div x-show="language === 'ar'" x-transition.opacity.in>
+				<div class="relative mb-5">
+					<input type="text" asp-for="Input.NameAr"
+	  x-init="arError = $el.classList.contains('input-validation-error') || arError"
+	  class="input peer" placeholder=" " />
+
+					<label asp-for="Input.NameAr" class="input-label">
+						@Localizer["NameAr"]
+					</label>
+
+					<span asp-validation-for="Input.NameAr" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative mb-5">
+					<textarea type="text" asp-for="Input.SelectionMessageAr"
+	  x-init="arError = $el.classList.contains('input-validation-error') || arError"
+	  class="input peer" placeholder=" ">
+					  </textarea>
+
+					<label asp-for="Input.SelectionMessageAr" class="input-label">
+						@Localizer["SelectionMessageAr"]
+					</label>
+
+					<span asp-validation-for="Input.SelectionMessageAr" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative mb-5">
+					<label asp-for="Input.DescriptionAr" class="">
+						@Localizer["DescriptionAr"]
+					</label>
+
+					<textarea type="text" asp-for="Input.DescriptionAr" data-lang="ar"
+	  x-init="enError = $el.classList.contains('input-validation-error') || enError" class="editor"
+	  placeholder=" ">
+						</textarea>
+
+					<span asp-validation-for="Input.DescriptionAr" class="text-red-500 text-sm"></span>
+				</div>
+			</div>
+
+			<div x-show="language === 'en'" x-transition.opacity.in.delay.5000ms>
+				<div class="relative mb-5">
+					<input type="text" asp-for="Input.NameEn"
+	  x-init="enError = $el.classList.contains('input-validation-error')"
+	  class="input peer" placeholder=" " />
+
+					<label asp-for="Input.NameEn" class="input-label">
+						@Localizer["NameEn"]
+					</label>
+
+					<span asp-validation-for="Input.NameEn" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="mb-5">
+					<div class="relative">
+						<textarea type="text" asp-for="Input.SelectionMessageEn"
+	   x-init="enError = $el.classList.contains('input-validation-error') || enError"
+	   class="input peer" placeholder=" ">
+						</textarea>
+
+						<label asp-for="Input.SelectionMessageEn" class="input-label">
+							@Localizer["SelectionMessageEn"]
+						</label>
+
+						<span asp-validation-for="Input.SelectionMessageEn" class="text-red-500 text-sm"></span>
+					</div>
+				</div>
+
+				<div class="mb-5">
+					<label asp-for="Input.DescriptionEn" class="">
+						@Localizer["DescriptionEn"]
+					</label>
+
+					<textarea type="text" asp-for="Input.DescriptionEn" data-lang="en"
+	  x-init="enError = $el.classList.contains('input-validation-error') || enError" class="editor"
+	  placeholder=" ">
+						</textarea>
+
+					<span asp-validation-for="Input.DescriptionEn" class="text-red-500 text-sm"></span>
+				</div>
+			</div>
+
+			<div class="flex space-x-2 rtl:space-x-reverse justify-end">
+				<a asp-area="admin" asp-page="/Locations/Index"
+	 class="transition-all border-2 duration-300 mt-10 text-primary-500 border-primary-500 active:bg-primary-800 hover:border-primary-700  hover:bg-primary-700 py-2 text-center w-fit px-6 hover:text-white">
+					@Localizer["Back"]
+				</a>
+
+				<button type="submit"
+					class="transition-all border-2 border-primary-500  hover:border-primary-700 duration-300 mt-10 bg-primary-500 active:bg-primary-800 hover:bg-primary-700 py-2 text-center w-fit px-6 text-white">
+					@Localizer["Save"]
+				</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+@section Styles {
+	<link rel="stylesheet" href="~/lib/quill/css/quill.min.css" />
+}
+
+@section Scripts {
+	<script defer src="~/lib/quill/js/quill.min.js"></script>
+	<script defer>
+		function htmlDecode(input) {
+			var e = document.createElement('div');
+			e.innerHTML = input;
+
+			if (e.childNodes[0]) {
+				return e.childNodes[0].nodeValue;
+			}
+
+			return '';
+		}
+
+		window.onload = function () {
+			let toolbarOptions = [
+				['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+				['blockquote'],
+				[{ 'list': 'ordered' }, { 'list': 'bullet' }],
+				[{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+				[{ 'direction': 'rtl' }],                         // text direction
+				[{ 'header': [1, 2, 3, false] }],
+				[{ 'align': [] }],
+				['clean']                                         // remove formatting button
+			];
+
+			const parser = new DOMParser();
+
+			document
+				.querySelectorAll('.editor')
+				.forEach(function (el, index) {
+					let id = 'quilleditor-' + index;
+					let val = el.innerHTML;
+
+					if (!val) {
+						val = '';
+					}
+
+					let htmlDoc = htmlDecode(val);
+
+					let editor_height = 200;
+
+					let div = document.createElement('div');
+
+					div.setAttribute('id', id);
+					div.style.height = editor_height + 'px';
+					div.innerHTML = htmlDoc;
+
+					el.classList.add('hidden');
+
+					el.parentElement.append(div);
+
+					var quill = new Quill('#' + id, {
+						modules: {
+							toolbar: toolbarOptions
+						},
+						theme: 'snow'
+					});
+
+					if (el.getAttribute('data-lang') === 'ar') {
+						quill.format('direction', 'rtl');
+						quill.format('align', 'right');
+					}
+
+					quill.on('text-change', function () {
+						el.innerHTML = quill.root.innerHTML;
+					});
+				});
+		}
+	</script>
+}

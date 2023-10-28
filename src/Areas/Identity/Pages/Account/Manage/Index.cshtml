@@ -1,0 +1,86 @@
+﻿@page
+@model IndexModel
+
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using YallaMasar;
+
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+@{
+	ViewData["Title"] = "Profile";
+	ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<div class="flex">
+	<div class="w-full md:w-1/2">
+		<form id="profile-form" method="post" class="flex flex-col space-y-2">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+				<h3 class="md:col-span-2 text-2xl">
+					@Localizer["Personal Info"]
+				</h3>
+
+				<div class="relative">
+					<input asp-for="Input.FirstName" class="input peer" placeholder=" " autocomplete
+						aria-required="true" />
+					<label asp-for="Input.FirstName" class="input-label"></label>
+					<span asp-validation-for="Input.FirstName" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<input asp-for="Input.LastName" class="input peer" placeholder=" " autocomplete
+						aria-required="true" />
+					<label asp-for="Input.LastName" class="input-label"></label>
+					<span asp-validation-for="Input.LastName" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<input asp-for="Input.DateOfBirth" class="input peer" placeholder=" " autocomplete
+						aria-required="true" />
+					<label asp-for="Input.DateOfBirth" class="input-label"></label>
+					<span asp-validation-for="Input.DateOfBirth" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<input asp-for="Input.PhoneNumber" class="input peer" placeholder=" " autocomplete
+						aria-required="true" />
+					<label asp-for="Input.PhoneNumber" class="input-label"></label>
+					<span asp-validation-for="Input.PhoneNumber" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<div class="flex flex-row space-x-4 rtl:space-x-reverse flex-nowrap">
+						<div class="">
+							<input asp-for="Input.Gender" id="Input.Gender.Male" aria-required="true" type="radio"
+								value="Male">
+							<label for="Input.Gender.Male" class="">
+								@Localizer["Male"]
+							</label>
+						</div>
+
+						<div class="">
+							<input asp-for="Input.Gender" id="Input.Gender.Female" aria-required="true" type="radio"
+								value="Female">
+							<label for="Input.Gender.Female" class="">
+								@Localizer["Female"]
+							</label>
+						</div>
+					</div>
+
+					<span asp-validation-for="Input.Gender" class="text-red-500 text-sm"></span>
+				</div>
+			</div>
+
+			<button id="update-profile-button" type="submit" class="btn-primary">
+				@Localizer["Save"]
+			</button>
+		</form>
+	</div>
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

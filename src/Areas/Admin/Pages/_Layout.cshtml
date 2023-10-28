@@ -1,0 +1,140 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@using YallaMasar;
+@using YallaMasar.Areas.Admin.Pages;
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+@{
+	var currentLanguage = System.Threading.Thread.CurrentThread.CurrentUICulture.Name ?? "ar";
+	var currentDir = currentLanguage == "ar" ? "rtl" : "ltr";
+	var title = ViewData["Title"]?.ToString() ?? "Yalla Masar";
+}
+
+<!DOCTYPE html>
+<html lang="@currentLanguage" dir="@currentDir">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>
+		@Localizer[title] - @Localizer["Yalla Masar"] - @Localizer["Admin"]
+	</title>
+
+	@await RenderSectionAsync("Styles", required: false)
+
+	<link rel="stylesheet" href="~/lib/lineawesome/css/line-awesome.min.css" />
+	<link rel="stylesheet" href="~/css/tailwind.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+	<script defer src="~/js/alpine.min.js" asp-append-version="true"></script>
+</head>
+
+<body class="relative m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-gray-50">
+	<div class="absolute w-full bg-primary-500 dark:hidden h-64 -z-10"></div>
+
+	<aside class="fixed inset-y-0 flex-wrap items-center justify-between block p-0 my-4 overflow-y-auto antialiased 
+		transition-transform duration-200 -translate-x-full bg-glass border-0 shadow-xl dark:shadow-none dark:bg-slate-850 
+		w-64 z-50 ltr:xl:ml-6 rtl:xl:mr-6 ltr:xl:left-0 rtl:xl:right-0 xl:translate-x-0">
+
+		<div class="h-20">
+			<a href="/" class="block px-8 py-6 m-0 whitespace-nowrap dark:text-white text-slate-700">
+				<img src="~/img/default-monochrome.svg" />
+			</a>
+
+			<hr
+				class="border-none mb-4 h-px mt-0 bg-transparent ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
+
+			<div class="items-center block w-auto max-h-screen overflow-auto h-sidenav grow basis-full">
+				<ul class="flex flex-col pl-0 mb-0">
+					<li class="mt-0.5 w-full">
+						<a href="/admin"
+							class="py-3 @ManageAdminNavPages.PageNavClass(ViewContext, ManageAdminNavPages.Index) dark:text-white dark:opacity-80 ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 font-semibold text-slate-700 transition-colors">
+							<div
+								class="ltr:mr-2 rtl:ml-2 flex h-8 w-8 items-center justify-center bg-center stroke-0 text-center xl:p-2.5">
+								<i class="relative top-0 text-3xl leading-normal las la-tv"></i>
+							</div>
+
+							<span class="ml-1 duration-300 opacity-100 pointer-events-none ease">
+								@Localizer["Dashboard"]
+							</span>
+						</a>
+					</li>
+
+					<li class="mt-0.5 w-full">
+						<a asp-area="admin" asp-page="/Locations/Index"
+							class="py-3 @ManageAdminNavPages.PageNavClass(ViewContext, ManageAdminNavPages.Locations) dark:text-white dark:opacity-80 ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 font-semibold text-slate-700 transition-colors">
+							<div
+								class="ltr:mr-2 rtl:ml-2 flex h-8 w-8 items-center justify-center bg-center stroke-0 text-center xl:p-2.5">
+								<i class="relative top-0 text-3xl leading-normal las la-map-marked"></i>
+							</div>
+
+							<span class="ml-1 duration-300 opacity-100 pointer-events-none ease">
+								@Localizer["Locations"]
+							</span>
+						</a>
+					</li>
+
+					<li class="mt-4 w-full">
+						<h6
+							class="ltr:pl-6 rtl:pr-6 ltr:ml-2 rtl:mr-2 font-bold leading-tight uppercase dark:text-white opacity-60">
+							@Localizer["Accounts"]
+						</h6>
+					</li>
+
+					<li class="mt-0.5 w-full">
+						<a asp-area="admin" asp-page="/Providers/Index"
+							class="py-3 @ManageAdminNavPages.PageNavClass(ViewContext, ManageAdminNavPages.Providers) dark:text-white dark:opacity-80 ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 font-semibold text-slate-700 transition-colors">
+							<div
+								class="ltr:mr-2 rtl:ml-2 flex h-8 w-8 items-center justify-center bg-center stroke-0 text-center xl:p-2.5">
+								<i class="relative top-0 text-3xl leading-normal las la-handshake"></i>
+							</div>
+
+							<span class="ml-1 duration-300 opacity-100 pointer-events-none ease">
+								@Localizer["Trip Providers"]
+							</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</aside>
+
+	<main role="main"
+		class="relative h-full max-h-screen transition-all duration-200 ease-in-out ltr:xl:ml-72 rtl:xl:mr-72">
+		<nav class="relative flex flex-wrap items-center justify-between px-0 py-4 
+			mx-6 transition-all ease-in shadow-none duration-250 lg:flex-nowrap lg:justify-start">
+			<div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
+				<div class="flex items-center ltr:md:ml-auto rtl:md:mr-auto md:pr-4">
+					<div class="relative flex flex-wrap items-stretch w-full transition-all ease">
+						<span class="ease leading-5 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap border border-r-0 border-transparent 
+								bg-transparent py-2 px-2.5 text-center font-normal transition-all">
+							<i class="la la-search" aria-hidden="true"></i>
+						</span>
+
+						<input type="text" class="ltr:pl-9 rtl:pr-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto border border-solid
+							 border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500
+							  focus:border-blue-500 focus:outline-none focus:transition-shadow" placeholder="Type here...">
+					</div>
+					<ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full ltr:ml-2 rtl:mr-2">
+						<li class="w-7 h-7 flex justify-center cursor-pointer text-white" onclick="toggleLanguage()">
+							<i class="la la-language text-3xl leading-7"> </i>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="w-full px-6 py-4 mx-auto">
+			<div class="bg-glass py-4 px-3 shadow-md">
+				@RenderBody()
+			</div>
+		</div>
+	</main>
+
+	<script defer src="~/lib/axios/axios.min.js" asp-append-version="true"></script>
+	<script defer src="~/js/site.js" asp-append-version="true"></script>
+
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

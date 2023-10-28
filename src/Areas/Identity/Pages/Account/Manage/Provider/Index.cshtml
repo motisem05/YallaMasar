@@ -1,0 +1,12 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using YallaMasar;
+@model YallaMasar.Areas.Identity.Pages.Account.Manage.Provider.IndexModel
+@{
+	ViewData["Title"] = "Provider";
+}
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+<a class=" @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="/Account/Manage/Provider/Register">
+	@Localizer["Register"]
+</a>

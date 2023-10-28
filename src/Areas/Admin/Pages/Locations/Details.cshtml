@@ -1,0 +1,278 @@
+﻿@page "/Admin/Locations/{id:Guid}"
+@model YallaMasar.Areas.Admin.Pages.Locations.DetailsModel
+
+@{
+	ViewData["Title"] = ManageAdminNavPages.Locations;
+	ViewData["ActivePage"] = ManageAdminNavPages.Locations;
+}
+
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+<div x-data="{ 
+		page: '@Thread.CurrentThread.CurrentUICulture.Name', 
+		changePage(newPage) { this.page = newPage; },
+		isActive(page) { return this.page == page },
+		'activeBorder': 'border-primary-400 text-primary-600',
+		'inactiveBorder': 'border-transparent hover:text-gray-500 hover:border-gray-300 dark:hover:text-gray-300'
+	}">
+	<div class="mb-10">
+		<div class="overflow-hidden relative mx-auto bg-gray-300 bg-opacity-70 aspect-w-16 aspect-h-9">
+			<img class="h-full w-full z-10 absolute top-0 left-0 right-0 bottom-0" id="Input_CoverPreview" alt="Cover"
+				src="/api/Locations/Covers/@Model.Id" />
+		</div>
+
+		<div
+			class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700 mb-4">
+			<ul class="flex flex-wrap -mb-px">
+				<li class="mr-2 rtl:order-first">
+					<button type="button" x-on:click="changePage('ar')"
+						:class="isActive('ar') ? activeBorder : inactiveBorder" class="inline-block p-4 border-b-2">
+						@Localizer["Arabic"]
+					</button>
+				</li>
+
+				<li class="mr-2 ltr:order-first ">
+					<button type="button" x-on:click="changePage('en')"
+						:class="isActive('en') ? activeBorder : inactiveBorder" class="inline-block p-4 border-b-2"
+						aria-current="page">
+						@Localizer["English"]
+					</button>
+				</li>
+
+				<li class="mr-2 ltr:order-first ">
+					<button type="button" x-on:click="changePage('images')"
+						:class="isActive('images') ? activeBorder : inactiveBorder" class="inline-block p-4 border-b-2"
+						aria-current="page">
+						@Localizer["Images"]
+					</button>
+				</li>
+
+				<li class="mr-2 ltr:order-first ">
+					<button type="button" x-on:click="changePage('poi')"
+						:class="isActive('poi') ? activeBorder : inactiveBorder" class="inline-block p-4 border-b-2"
+						aria-current="page">
+						@Localizer["Places of interest"]
+					</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div x-show="isActive('ar')">
+		<div>
+			<div class="relative mb-5">
+				<p>
+					@Localizer["NameAr"]
+				</p>
+
+				<p>
+					@Model.Input.NameAr
+				</p>
+			</div>
+
+			<div class="relative mb-5">
+				<p>
+					@Localizer["SelectionMessageAr"]
+				</p>
+
+				<p>
+					@Model.Input.SelectionMessageAr
+				</p>
+			</div>
+
+			<div class="relative mb-5">
+				<p>
+					@Localizer["DescriptionAr"]
+				</p>
+
+				<p>
+					@Html.Raw(Model.Input.DescriptionAr)
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div x-show="isActive('en')">
+		<div class="">
+			<div class="relative mb-5">
+				<p>
+					@Localizer["NameEn"]
+				</p>
+
+				<p>
+					@Model.Input.NameEn
+				</p>
+			</div>
+
+			<div class="relative mb-5">
+				<p>
+					@Localizer["SelectionMessageEn"]
+				</p>
+
+				<p>
+					@Model.Input.SelectionMessageEn
+				</p>
+			</div>
+
+			<div class="relative mb-5">
+				<p>
+					@Localizer["DescriptionEn"]
+				</p>
+
+				<p>
+					@Html.Raw(Model.Input.DescriptionEn)
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div x-show="isActive('images')">
+		<div
+			class="flex flex-col flex-wrap md:flex-row space-y-4 md:space-x-6 grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 mb-4 rtl:space-x-reverse">
+			@foreach (var image in Model.Input.Images)
+			{
+				<div class="first:rtl:mr-4 first:mt-4 first:ltr:ml-4 relative shadow-md group w-64 h-96 bg-cover bg-center bg-no-repeat transition-all duration-300 rounded-md"
+					style="background-image: url('/api/locations/images/@image');">
+				</div>
+			}
+		</div>
+
+		<form x-data="imageViewer()" method="post" action="/api/Locations/Covers/@Model.Id"
+   enctype="multipart/form-data">
+			<div class="mb-2">
+				<!-- Show the image -->
+				<template x-if="imageUrl">
+					<img :src="imageUrl" class="object-cover rounded border border-gray-200"
+						style="width: 100px; height: 100px;">
+				</template>
+
+				<!-- Show the gray box when image is not available -->
+				<template x-if="!imageUrl">
+					<div class="border rounded border-gray-200 bg-gray-100" style="width: 100px; height: 100px;"></div>
+				</template>
+
+				<!-- Image file selector -->
+				<input class="mt-2" name="image" type="file" accept="image/*" @@change="fileChosen">
+
+				<button type="submit">Submit</button>
+			</div>
+		</form>
+	</div>
+
+	<div x-show="isActive('poi')">
+		<div class="rtl:mr-4 first:mt-4 ltr:ml-4">
+			<a asp-area="admin" asp-page="/Locations/PlaceForm" asp-page-handler="Add" asp-route-id="@Model.Id" class="transition-all border-2 duration-300 mt-10 text-primary-500 border-primary-500 active:bg-primary-800 hover:border-primary-700
+				  hover:bg-primary-700 py-2 text-center w-fit px-6 hover:text-white">
+				@Localizer["Add"]
+			</a>
+		</div>
+		<div class="flex space-x-2">
+			@foreach (var place in Model.Input.Places)
+			{
+				var info = place.Info.FirstOrDefault();
+
+				<div
+					class="first:rtl:mr-4 first:mt-4 first:ltr:ml-4 glass-bg h-48 relative min-w-fit shadow-md p-1 bg-glass group w-72">
+					<img class="h-full w-full" src="/api/InterestingPlaces/covers/@place.Id" alt="" />
+					<div class="absolute rtl:bg-gradient-to-l ltr:bg-gradient-to-r from-black/80 via-transparent 
+				inset-0 h-full w-full text-white flex items-end pb-4 rtl:pr-4 ltr:pl-4 transition-all duration-300 backdrop-saturate-40 backdrop-brightness-90 
+				hover:backdrop-brightness-100 hover:backdrop-saturate-100">
+						<h2 class="text-2xl">
+							@info.Name
+						</h2>
+					</div>
+
+					<div class="absolute flex flex-col px-3 py-1 top-2 ltr:right-2 rtl:left-2">
+						<div class="flex justify-center">
+							<div x-data="{
+							open: false,
+							toggle() {
+								if (this.open) {
+									return this.close()
+								}
+
+								this.$refs.button.focus()
+
+								this.open = true
+							},
+							close(focusAfter) {
+								if (! this.open) return
+
+								this.open = false
+
+								focusAfter && focusAfter.focus()
+							}
+						}" x-on:keydown.escape.prevent.stop="close($refs.button)"
+								x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+								x-id="['dropdown-button']" class="relative">
+								<button x-ref="button" x-on:click="toggle()" :aria-expanded="open"
+									:aria-controls="$id('dropdown-button')" type="button" class="flex items-center shadow">
+									<i class="la la-chevron-down"></i>
+								</button>
+
+								<div x-ref="panel" x-show="open" x-transition.origin.top.left
+									x-on:click.outside="close($refs.button)" :id="$id('dropdown-button')"
+									style="display: none;"
+									class="absolute rtl:left-0 ltr:right-0 mt-2 w-40 bg-white shadow-md">
+									<a asp-area="Admin" asp-page="/Locations/Details" asp-route-id="@place.Id" class="flex items-center gap-2 w-full px-4 py-2.5
+								 hover:bg-gray-100 disabled:text-gray-500">
+										<i class="la la-info"></i>
+
+										<span class="text-base">
+											@Localizer["Details"]
+										</span>
+									</a>
+
+									<a asp-area="Admin" asp-page="/Locations/PlaceForm" asp-page-handler="Edit"
+									asp-route-id="@Model.Id" asp-route-placeId="@place.Id" asp-page-handler="edit"
+			 class="flex items-center gap-2 w-full px-4 py-2.5
+								 hover:bg-gray-100 disabled:text-gray-500">
+										<i class="la la-edit"></i>
+
+										<span class="text-base">
+											@Localizer["Edit"]
+										</span>
+									</a>
+
+									<a href="#"
+										class="flex items-center gap-2 text-red-600 w-full px-4 py-2.5 hover:bg-gray-100 disabled:text-gray-500">
+										<i class="la la-trash"></i>
+
+										<span class="text-base">
+											@Localizer["Delete"]
+										</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+</div>
+
+
+@section Scripts {
+	<script>
+		function imageViewer() {
+			return {
+				imageUrl: '',
+
+				fileChosen(event) {
+					this.fileToDataUrl(event, src => this.imageUrl = src)
+				},
+
+				fileToDataUrl(event, callback) {
+					if (!event.target.files.length) return
+
+					let file = event.target.files[0],
+						reader = new FileReader()
+
+					reader.readAsDataURL(file)
+					reader.onload = e => callback(e.target.result)
+				},
+			}
+		};
+	</script>
+}

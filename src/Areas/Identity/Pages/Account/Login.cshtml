@@ -1,0 +1,95 @@
+﻿@page
+@model LoginModel
+
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using YallaMasar;
+
+@{
+	ViewData["Title"] = "Login";
+	ViewData["Image"] = "/img/register.svg";
+}
+
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+<div class="flex flex-col md:flex-row md:space-x-10 rtl:space-x-reverse space-y-4 md:space-y-0 flex-nowrap">
+	<div class="w-full md:w-1/2">
+		<section>
+			<form id="account" method="post" class="flex flex-col space-y-4">
+				<h2>Use a local account to log in.</h2>
+				<hr />
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+				<div class="relative">
+					<input asp-for="Input.Email" placeholder=" " class="input peer" autocomplete="username"
+	  aria-required="true" />
+					<label asp-for="Input.Email" class="input-label"></label>
+					<span asp-validation-for="Input.Email" class="text-sm text-red-500"></span>
+				</div>
+
+				<div class="relative">
+					<input asp-for="Input.Password" placeholder=" " class="input peer" autocomplete="current-password"
+	  aria-required="true" />
+					<label asp-for="Input.Password" class="input-label"></label>
+					<span asp-validation-for="Input.Password" class="text-danger"></span>
+				</div>
+
+				<div>
+					<div class="checkbox">
+						<label asp-for="Input.RememberMe" class="inputlabel">
+							<input class="inputcheck-input" asp-for="Input.RememberMe" />
+							@Html.DisplayNameFor(m => m.Input.RememberMe)
+						</label>
+					</div>
+				</div>
+
+				<div>
+					<button id="login-submit" type="submit" class="btn-primary">
+						@Localizer["Login"]
+					</button>
+				</div>
+
+				<div>
+					<p>
+						<a id="forgot-password" asp-page="./ForgotPassword">
+							@Localizer["Forgot your password?"]
+						</a>
+					</p>
+
+					<p>
+						<a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">
+							@Localizer["Register as a new user"]
+						</a>
+					</p>
+
+					@* <p>
+					<a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+					</p> *@
+				</div>
+			</form>
+		</section>
+	</div>
+
+	<div class="w-full md:w-1/2">
+		<section>
+			<h3>Use another service to log in.</h3>
+			<hr />
+
+			<form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post"
+	class="inputhorizontal">
+				<div>
+					<p>
+						@foreach (var provider in Model.ExternalLogins)
+						{
+							<button type="submit" class="btn btn-primary" name="provider" value="@provider.Name"
+								title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+						}
+					</p>
+				</div>
+			</form>
+		</section>
+	</div>
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

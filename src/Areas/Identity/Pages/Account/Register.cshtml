@@ -1,0 +1,140 @@
+﻿@page
+@model RegisterModel
+
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using YallaMasar;
+
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+@{
+	ViewData["Title"] = "Register";
+}
+
+<div class="flex flex-col md:flex-row md:space-x-10 rtl:space-x-reverse space-y-4 md:space-y-0 flex-nowrap">
+	<div class="w-full md:w-1/2">
+		<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="flex flex-col space-y-4">
+			<h2>
+				Create a new account.
+			</h2>
+
+			<div asp-validation-summary="ModelOnly" class="text-red-500 text-sm"></div>
+
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+				<h3 class="md:col-span-2 text-2xl">
+					@Localizer["Personal Info"]
+				</h3>
+
+				<hr
+					class="md:col-span-2 mb-4 h-px mt-0 rtl:bg-gradient-to-l ltr:bg-gradient-to-r border-0 from-black via-transparent" />
+
+				<div class="relative">
+					<input asp-for="Input.FirstName" class="input peer" placeholder=" " autocomplete
+						aria-required="true" />
+					<label asp-for="Input.FirstName" class="input-label"></label>
+					<span asp-validation-for="Input.FirstName" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<input asp-for="Input.LastName" class="input peer" placeholder=" " autocomplete
+						aria-required="true" />
+					<label asp-for="Input.LastName" class="input-label"></label>
+					<span asp-validation-for="Input.LastName" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<input asp-for="Input.DateOfBirth" class="input peer" placeholder=" " autocomplete
+						aria-required="true" />
+					<label asp-for="Input.DateOfBirth" class="input-label"></label>
+					<span asp-validation-for="Input.DateOfBirth" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<input asp-for="Input.PhoneNumber" class="input peer" placeholder=" " autocomplete
+						aria-required="true" />
+					<label asp-for="Input.PhoneNumber" class="input-label"></label>
+					<span asp-validation-for="Input.PhoneNumber" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<div class="flex flex-row space-x-4 rtl:space-x-reverse flex-nowrap">
+						<div class="">
+							<input asp-for="Input.Gender" id="Input.Gender.Male" aria-required="true" type="radio"
+								value="Male">
+							<label for="Input.Gender.Male" class="">
+								@Localizer["Male"]
+							</label>
+						</div>
+
+						<div class="">
+							<input asp-for="Input.Gender" id="Input.Gender.Female" aria-required="true" type="radio"
+								value="Female">
+							<label for="Input.Gender.Female" class="">
+								@Localizer["Female"]
+							</label>
+						</div>
+					</div>
+
+					<span asp-validation-for="Input.Gender" class="text-red-500 text-sm"></span>
+				</div>
+
+				<h3 class="md:col-span-2 text-2xl">
+					@Localizer["Login Info"]
+				</h3>
+
+				<hr
+					class="md:col-span-2 mb-4 h-px mt-0 rtl:bg-gradient-to-l ltr:bg-gradient-to-r border-0 from-black via-transparent" />
+
+				<div class="relative md:col-span-2">
+					<input asp-for="Input.Email" class="input peer" placeholder=" " autocomplete="username"
+						aria-required="true" />
+					<label asp-for="Input.Email" class="input-label"></label>
+					<span asp-validation-for="Input.Email" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<input asp-for="Input.Password" class="input peer" placeholder=" " autocomplete="new-password"
+						aria-required="true" />
+					<label asp-for="Input.Password" class="input-label"></label>
+					<span asp-validation-for="Input.Password" class="text-red-500 text-sm"></span>
+				</div>
+
+				<div class="relative">
+					<input asp-for="Input.ConfirmPassword" class="input peer" placeholder=" "
+						autocomplete="new-password" aria-required="true" />
+					<label asp-for="Input.ConfirmPassword" class="input-label"></label>
+					<span asp-validation-for="Input.ConfirmPassword" class="text-red-500 text-sm"></span>
+				</div>
+			</div>
+
+			<button id="registerSubmit" type="submit" class="btn-primary">
+				@Localizer["Register"]
+			</button>
+		</form>
+	</div>
+
+	<div class="w-full md:w-1/2">
+		<section>
+			<h3>Use another service to register.</h3>
+			<hr />
+
+			<form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post"
+				class="form-horizontal">
+				<div>
+					<p>
+						@foreach (var provider in Model.ExternalLogins)
+						{
+							<button type="submit" class="btn btn-primary" name="provider" value="@provider.Name"
+								title="Log in using your @provider.DisplayName account">
+								@provider.DisplayName
+							</button>
+						}
+					</p>
+				</div>
+			</form>
+		</section>
+	</div>
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

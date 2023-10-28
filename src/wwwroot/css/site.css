@@ -1,0 +1,162 @@
+body,
+html {
+	height: 100%;
+}
+
+.bg-glass {
+	background: rgba(255, 255, 255, 0.7);
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+}
+
+.input-validation-error {
+	border-color: rgb(239 68 68/var(--tw-text-opacity));
+}
+
+.input-validation-error+label {
+	color: rgb(239 68 68/var(--tw-text-opacity));
+}
+
+[x-cloak] {
+	display: none !important;
+}
+
+.home-overlay {
+	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/img/bg.jpg");
+}
+
+.markdown blockquote {
+	display: block;
+	padding: 10px 20px;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	margin-left: 40px;
+	margin-right: 40px;
+}
+
+html[dir="ltr"] .markdown blockquote {
+	border-left: 5px solid #eee;
+}
+
+html[dir="rtl"] .markdown blockquote {
+	border-right: 5px solid #eee;
+}
+
+.markdown caption {
+	display: table-caption;
+	text-align: center;
+}
+
+.markdown code {
+	font-family: monospace;
+}
+
+.markdown dd {
+	display: block;
+	margin-left: 40px;
+}
+
+.markdown dl {
+	display: block;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.markdown em,
+.markdown i {
+	font-style: italic;
+}
+
+.markdown dt {
+	display: block;
+}
+
+.markdown del {
+	text-decoration: line-through;
+}
+
+.markdown q {
+	display: inline;
+}
+
+.markdown q::before {
+	content: open-quote;
+}
+
+.markdown q::after {
+	content: close-quote;
+}
+
+.markdown ul {
+	list-style-type: disc;
+}
+
+.markdown h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+
+.markdown h2 {
+	font-size: 1.5em;
+	margin: 0.75em 0;
+}
+
+.markdown h3 {
+	font-size: 1.17em;
+	margin: 0.83em 0;
+}
+
+.markdown h5 {
+	font-size: 0.83em;
+	margin: 1.5em 0;
+}
+
+.markdown h6 {
+	font-size: 0.75em;
+	margin: 1.67em 0;
+}
+
+.markdown p {
+	display: block;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+	font-weight: bolder;
+	color: rgb(53 132 176);
+}
+
+.markdown ul {
+	list-style-type: disc;
+	list-style-position: inside;
+}
+
+.markdown ol {
+	list-style-type: decimal;
+	list-style-position: inside;
+}
+
+.markdown ul ul,
+.markdown ol ul {
+	list-style-type: circle;
+	list-style-position: inside;
+	margin-left: 15px;
+}
+
+.markdown ol ol,
+.markdown ul ol {
+	list-style-type: lower-latin;
+	list-style-position: inside;
+	margin-left: 15px;
+}

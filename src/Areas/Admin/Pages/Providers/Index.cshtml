@@ -1,0 +1,66 @@
+@page
+@model YallaMasar.Areas.Admin.Pages.Providers.IndexModel
+
+@{
+	ViewData["Title"] = ManageAdminNavPages.Providers;
+	ViewData["ActivePage"] = ManageAdminNavPages.Providers;
+}
+
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+<div class="overflow-x-auto">
+	<table class="table-design">
+		<thead class="">
+			<tr>
+				<th>
+					@Localizer["Name"]
+				</th>
+
+				<th>
+					@Localizer["Email"]
+				</th>
+
+				<th>
+					@Localizer["Phone Number"]
+				</th>
+
+				<th>
+					@Localizer["Status"]
+				</th>
+
+				<th>
+					@Localizer["Actions"]
+				</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			@foreach (var item in Model.Providers)
+			{
+				<tr class="">
+					<td class="">
+						@item.Name
+					</td>
+
+					<td class="">
+						@item.Email
+					</td>
+
+					<td class="text-center">
+						@item.PhoneNumber
+					</td>
+
+					<td class="">
+						@Localizer[@item.Status.ToString()]
+					</td>
+
+					<td class="">
+						<a asp-area="admin" asp-page="/Providers/Review" asp-route-id="@item.Id" class="btn-text">
+							<i class="las la-file-contract text-3xl" title='@Localizer["Review"]'></i>
+						</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

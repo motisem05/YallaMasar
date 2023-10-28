@@ -1,0 +1,66 @@
+﻿@page "/Locations/{id:Guid}"
+
+@model YallaMasar.Areas.Locations.Pages.DetailsModel
+
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+@{
+	ViewData["Title"] = Model.Input.Name;
+	ViewData["Image"] = "/api/Locations/Covers/" + Model.Id;
+	ViewData["Area"] = "Locations";
+}
+
+<div class="flex flex-col space-y-6">
+	<h2 class="text-3xl">
+		@Localizer["About"] @Model.Input.Name
+	</h2>
+
+	<div class="markdown">
+		@Html.Raw(Model.Input.Description)
+	</div>
+
+	<h2 class="text-3xl">
+		@Localizer["Photos"]
+	</h2>
+
+	<div class="relative">
+		<!-- Contents -->
+		<div class="relative w-full flex gap-6 snap-x snap-mandatory overflow-x-auto pb-14 md:flex-wrap">
+			@foreach (var image in Model.Input.Images)
+			{
+				<div class="snap-center shrink-0">
+					<div class="w-64 h-96 bg-cover bg-center bg-no-repeat"
+						style="background-image: url('/api/locations/images/@image');">
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+
+	<h2 class="text-3xl">
+		@Localizer["Places of interest"]
+	</h2>
+
+	<div class="relative">
+		<!-- Contents -->
+		<div class="relative w-full flex gap-6 snap-x snap-mandatory overflow-x-auto pb-14 md:flex-wrap">
+			@foreach (var place in Model.Input.Places)
+			{
+				var info = place.Info.FirstOrDefault();
+
+				<div class="snap-center shrink-0">
+					<a asp-area="Locations" asp-page="/Places" asp-route-id="@place.Id"
+		 				class="duration-150 transition-all relative shadow-md first:rtl:mr-6 first:mt-4 first:ltr:ml-6 group w-64 h-96 bg-cover bg-center bg-no-repeat rounded-md">
+						<div class="relative shadow-md group w-64 h-96 bg-cover bg-center bg-no-repeat transition-all duration-300 rounded-md"
+							style="background-image: url('/api/InterestingPlaces/covers/@place.Id');">
+							<h2
+								class="text-3xl absolute rtl:bg-gradient-to-tl ltr:bg-gradient-to-tr from-black/80 via-transparent inset-0 h-full w-full text-white flex items-end pb-4 rtl:pr-4 ltr:pl-4">
+								@info.Name
+							</h2>
+						</div>
+					</a>
+				</div>
+			}
+		</div>
+	</div>
+</div>
